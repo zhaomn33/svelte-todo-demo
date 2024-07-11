@@ -51,13 +51,13 @@ export default {
 		// 警告通常直接传递给 Rollup。你可以
     // 选择在这里处理它们，例如压制
     // 带有特定代码的警告
-    onwarn((warning, handler) => {
-      // 例如，我不在乎屏幕阅读器 -> 请 不 要 这 样 做！！！
-      if (warning.code === "a11y-missing-attribute") return;
+    // onwarn((warning, handler) => {
+    //   // 例如，我不在乎屏幕阅读器 -> 请 不 要 这 样 做！！！
+    //   if (warning.code === "a11y-missing-attribute") return;
 
-      // 让 Rollup 正常处理所有其他警告
-      handler(warning);
-    }),
+    //   // 让 Rollup 正常处理所有其他警告
+    //   handler(warning);
+    // }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

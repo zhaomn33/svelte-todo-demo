@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
   import { selectOnFocus } from "../actions.js";
   import { createEventDispatcher, tick } from "svelte";
-  const dispatch = createEventDispatcher();
   
-  export let todo
+  import type { TodoType } from "../types/todo.type";
+  
+  export let todo: TodoType;
+  
+  const dispatch = createEventDispatcher();
 
   let editing = false; // 跟踪编辑模式
   let name = todo.name; // 存储被编辑的待办事项名称

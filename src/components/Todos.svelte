@@ -1,4 +1,5 @@
 
+<!-- <script lang="ts"> -->
 <script>
   import FilterButton from "./FilterButton.svelte";
   import Todo from "./Todo.svelte";
@@ -101,6 +102,8 @@
   </ul>
 
   <hr />
+
+  <!-- <Todo todo={ { name: 'a new task with no id!', completed: false } } /> -->
 
   <!-- 更多操作 -->
   <MoreActions

@@ -77,6 +77,10 @@ export default {
 			sourceMap: !production,
 			inlineSources: !production
 		}),
+		typescript({
+			sourceMap: !production,
+			inlineSources: !production
+		}),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

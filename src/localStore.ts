@@ -1,10 +1,12 @@
 import { writable } from "svelte/store";
 
-export const localStore = (key, initial) => {
+import type { JsonValue } from "./types/json.type";
+
+export const localStore = <T extends JsonValue>(key: string, initial: T) => {
   // 接收本地存储的键和初始值
 
   // Web 存储只支持保存字符串值
-  const toString = (value) => JSON.stringify(value, null, 2); // 辅助函数
+  const toString = (value: T) => JSON.stringify(value, null, 2); // 辅助函数
   const toObj = JSON.parse; // 辅助函数
 
   if (localStorage.getItem(key) === null) {
@@ -14,12 +16,12 @@ export const localStore = (key, initial) => {
 
   const saved = toObj(localStorage.getItem(key)); // 转换为对象
 
-  const { subscribe, set, update } = writable(saved); // 创建底层的可写 store
+  const { subscribe, set, update } = writable<T>(saved); // 创建底层的可写 store
 
   return {
     subscribe,
-    set: (value) => {
-      localStorage.setItem(key, toString(value)); // 也将其作为字符串保存到本地存储中
+    set: (value: T) => {
+      localStorage.setItem(key, toString(value)); // 也将值以字符串形式保存到本地存储
       return set(value);
     },
     update,

@@ -1,12 +1,12 @@
-<script>
-  import { selectOnFocus } from "../actions.js";
+<script lang='ts'>
+  import { selectOnFocus } from "../actions";
   import { createEventDispatcher, onMount } from 'svelte';
   const dispatch = createEventDispatcher();
 
-  export let autofocus = false;
+  export let autofocus: boolean = false;
 
   let name = '';
-  let nameEl; // 对 name 输入框 DOM 节点的引用
+  let nameEl: HTMLElement; // 对 name 输入框 DOM 节点的引用
 
   // if (autofocus) nameEl.focus();
 

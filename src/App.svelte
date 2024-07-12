@@ -7,7 +7,11 @@
 <script lang="ts">
   import Todos from "./components/Todos.svelte";
   import Alert from "./components/Alert.svelte";
-  import { todos } from "./stores.js";
+
+  import { todos } from "./stores";
+
+  // 这是无效的，内容无法使用 JSON.stringify 转换为 JSON
+  // $todos = { handler: () => {} };
 
 	// let todos = [
   // $todos = [

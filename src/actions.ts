@@ -1,4 +1,4 @@
-export function selectOnFocus(node) {
+export function selectOnFocus(node: HTMLInputElement) {
   if (node && typeof node.select === "function") {
     // 确保 node 已定义并具有 select() 方法
     const onFocus = (event) => node.select(); // 事件处理器

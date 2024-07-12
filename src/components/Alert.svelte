@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
   import { onDestroy } from "svelte";
   import { alert } from "../stores.js";
   import { fly } from "svelte/transition";
 
   export let ms = 3000;
-  let visible;
-  let timeout;
+  let visible: boolean
+  let timeout: number
 
-  const onMessageChange = (message, ms) => {
+  const onMessageChange = (message: string, ms: number) => {
     clearTimeout(timeout);
     if (!message) {
       // 如果消息为空，则隐藏提示

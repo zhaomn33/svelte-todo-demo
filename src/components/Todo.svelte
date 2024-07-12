@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { selectOnFocus } from "../actions.js";
+  import { selectOnFocus } from "../actions";
   import { createEventDispatcher, tick } from "svelte";
   
   import type { TodoType } from "../types/todo.type";
@@ -13,7 +13,7 @@
   let nameEl; // 对 name 输入框 DOM 节点的引用
   let editButtonPressed = false; // 跟踪编辑按钮是否已按下，以便在取消或保存后将焦点放在它上面
 
-  function update(updatedTodo) {
+  function update(updatedTodo: Partial<TodoType>) {
     todo = { ...todo, ...updatedTodo }; // 将修改应用于待办事项
     dispatch("update", todo); // 发出更新事件 (更新父组件)
   }
@@ -41,10 +41,10 @@
 
     // setTimeout(() => nameEl.focus(), 0); // 异步调用，将焦点设置到 name 输入框
   }
-  const focusOnInit = (node) =>
+  const focusOnInit = (node: HTMLElement) =>
     node && typeof node.focus === "function" && node.focus();
 
-  const focusEditButton = (node) => editButtonPressed && node.focus();
+  const focusEditButton = (node: HTMLElement) => editButtonPressed && node.focus();
 
   function onToggle() {
     update({ completed: !todo.completed }); // 更新待办事项状态

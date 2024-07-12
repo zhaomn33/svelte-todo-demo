@@ -1,14 +1,15 @@
-
-<!-- <script lang="ts"> -->
-<script>
+<script lang="ts">
   import FilterButton from "./FilterButton.svelte";
   import Todo from "./Todo.svelte";
   import MoreActions from "./MoreActions.svelte";
   import NewTodo from "./NewTodo.svelte";
   import TodosStatus from "./TodosStatus.svelte";
   import { alert } from "../stores.js";
+  import { Filter } from "../types/filter.enum";
 
-  export let todos = [];
+  import type { TodoType } from "../types/todo.type";
+
+  export let todos: TodoType[] = [];
   let newTodoName = "";
   let newTodoId;
   let todosStatus; // 对 TodosStatus 实例的引用
@@ -24,35 +25,53 @@
   // $: totalTodos = todos.length;
   // $: completedTodos = todos.filter((todo) => todo.completed).length;
 
-  let filter = "all";
-  $: {
-    if (filter === "all") {
-      $alert = "Browsing all to-dos";
-    } else if (filter === "active") {
-      $alert = "Browsing active to-dos";
-    } else if (filter === "completed") {
-      $alert = "Browsing completed to-dos";
-    }
-  }
-  const filterTodos = (filter, todos) =>
-    filter === "active"
+  let filter: Filter = Filter.ALL;
+  const filterTodos = (filter: Filter, todos) =>
+    filter === Filter.ACTIVE
       ? todos.filter((t) => !t.completed)
-      : filter === "completed"
+      : filter === Filter.COMPLETED
         ? todos.filter((t) => t.completed)
         : todos;
 
-  function addTodo(name) {
+  $: {
+    if (filter === Filter.ALL) {
+      $alert = "Browsing all todos";
+    } else if (filter === Filter.ACTIVE) {
+      $alert = "Browsing active todos";
+    } else if (filter === Filter.COMPLETED) {
+      $alert = "Browsing completed todos";
+    }
+  }
+
+  // let filter = "all";
+  // $: {
+  //   if (filter === "all") {
+  //     $alert = "Browsing all to-dos";
+  //   } else if (filter === "active") {
+  //     $alert = "Browsing active to-dos";
+  //   } else if (filter === "completed") {
+  //     $alert = "Browsing completed to-dos";
+  //   }
+  // }
+  // const filterTodos = (filter, todos) =>
+  //   filter === "active"
+  //     ? todos.filter((t) => !t.completed)
+  //     : filter === "completed"
+  //       ? todos.filter((t) => t.completed)
+  //       : todos;
+
+  function addTodo(name: string) {
     todos = [...todos, { id: newTodoId, name, completed: false }];
     $alert = `Todo '${name}' has been added`;
   }
 
-  function removeTodo(todo) {
+  function removeTodo(todo: TodoType) {
     todos = todos.filter((t) => t.id !== todo.id);
     todosStatus.focus(); // 将焦点放在状态标题上
     $alert = `Todo '${todo.name}' has been deleted`;
   }
 
-  function updateTodo(todo) {
+  function updateTodo(todo: TodoType) {
     const i = todos.findIndex((t) => t.id === todo.id);
     if (todos[i].name !== todo.name)
       $alert = `todo '${todos[i].name}' has been renamed to '${todo.name}'`;
@@ -63,7 +82,7 @@
     todos[i] = { ...todos[i], ...todo };
   }
 
-  const checkAllTodos = (completed) =>{
+  const checkAllTodos = (completed: boolean) =>{
     // todos.forEach((t) => (t.completed = completed));
     // console.log("todos", todos);
     // 将新数组赋值 促使todos更新
@@ -102,8 +121,6 @@
   </ul>
 
   <hr />
-
-  <!-- <Todo todo={ { name: 'a new task with no id!', completed: false } } /> -->
 
   <!-- 更多操作 -->
   <MoreActions
